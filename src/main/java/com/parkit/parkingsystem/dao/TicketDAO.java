@@ -19,7 +19,8 @@ public class TicketDAO {
 
     public DataBaseConfig dataBaseConfig = new DataBaseConfig();
 
-    public boolean saveTicket(Ticket ticket){
+    @SuppressWarnings("finally")
+	public boolean saveTicket(Ticket ticket){
         Connection con = null;
         try {
             con = dataBaseConfig.getConnection();
@@ -40,7 +41,8 @@ public class TicketDAO {
         }
     }
 
-    public Ticket getTicket(String vehicleRegNumber) {
+    @SuppressWarnings("finally")
+	public Ticket getTicket(String vehicleRegNumber) {
         Connection con = null;
         Ticket ticket = null;
         try {
@@ -75,6 +77,7 @@ public class TicketDAO {
             con = dataBaseConfig.getConnection();
             PreparedStatement ps = con.prepareStatement(DBConstants.UPDATE_TICKET);
             ps.setDouble(1, ticket.getPrice());
+            //Thread.sleep(10000);
             ps.setTimestamp(2, new Timestamp(ticket.getOutTime().getTime()));
             ps.setInt(3,ticket.getId());
             ps.execute();
