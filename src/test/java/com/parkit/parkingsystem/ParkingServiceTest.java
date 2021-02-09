@@ -63,7 +63,6 @@ public class ParkingServiceTest {
         
         //THEN
         verify(parkingSpotDAO, Mockito.times(1)).updateParking(any(ParkingSpot.class));
-        //verify(ticketDAO).
     }
 
 }

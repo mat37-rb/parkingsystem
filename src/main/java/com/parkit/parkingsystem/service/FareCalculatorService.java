@@ -24,6 +24,14 @@ public class FareCalculatorService {
                 ticket.setPrice(Fare.BIKE_RATE_PER_HOUR * duration/1000./60./60);
                 break;
             }
+            case FREE_CAR: {
+                ticket.setPrice(Fare.LESS_THAN_HALF_HOUR * duration/1000./60./60.);
+                break;
+            }
+            case FREE_BIKE: {
+                ticket.setPrice(Fare.LESS_THAN_HALF_HOUR * duration/1000./60./60.);
+                break;
+            }
             default: throw new IllegalArgumentException("Unkown Parking Type");
         }
     }
