@@ -128,6 +128,8 @@ public class FareCalculatorServiceTest {
 
 	@Test
 	public void calculateFareCarWithMoreThanADayParkingTime() {
+
+		// GIVEN
 		Date inTime = new Date();
 		inTime.setTime(System.currentTimeMillis() - (24 * 60 * 60 * 1000));
 		// 24 hours parking time should give 24 * parking fare per hour
@@ -137,6 +139,8 @@ public class FareCalculatorServiceTest {
 		ticket.setInTime(inTime);
 		ticket.setOutTime(outTime);
 		ticket.setParkingSpot(parkingSpot);
+
+		// WHEN
 		fareCalculatorService.calculateFare(ticket);
 	}
 
@@ -189,15 +193,18 @@ public class FareCalculatorServiceTest {
 		Date inTime = new Date();
 		inTime.setTime(System.currentTimeMillis() - (60 * 60 * 1000));
 		Date outTime = new Date();
+
 		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
 		ticket.setInTime(inTime);
 		ticket.setOutTime(outTime);
 		ticket.setParkingSpot(parkingSpot);
+		ticket.setVehicleRegNumber("ABCDE");
 		when(mockTicketDAO.isRecurrentUser(anyString())).thenReturn(true);
+
 		// WHEN
 		fareCalculatorService.calculateFare(ticket);
 
 		// THEN
-		assertEquals((Fare.CAR_RATE_PER_HOUR) - (Fare.CAR_RATE_PER_HOUR * 0.025), ticket.getPrice());
+		assertEquals((0.95 * Fare.CAR_RATE_PER_HOUR), ticket.getPrice(), 0.001);
 	}
 }

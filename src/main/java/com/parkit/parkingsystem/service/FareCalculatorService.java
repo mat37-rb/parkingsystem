@@ -25,10 +25,6 @@ public class FareCalculatorService {
 			ticket.setPrice(0);
 			return;
 		}
-		if (ticketDAO.isRecurrentUser(ticket.getVehicleRegNumber())) {
-			ticket.setPrice(duration - (duration * 0.025));
-			return;
-		}
 
 		switch (ticket.getParkingSpot().getParkingType()) {
 		case CAR:
@@ -41,6 +37,10 @@ public class FareCalculatorService {
 
 		default:
 			throw new IllegalArgumentException("Unkown Parking Type");
+		}
+
+		if (ticketDAO.isRecurrentUser(ticket.getVehicleRegNumber())) {
+			ticket.setPrice(ticket.getPrice() * 0.95);
 		}
 	}
 }
